@@ -1,0 +1,26 @@
+[
+  {
+    "profileImage": "assets/images/onekid.png",
+    "title": "Emilia in Kakuma Refugee Camp.",
+    "startDate": "2024-May-20",
+    "dueDate": "2026-JUne-20",
+    "totalDonation": "10000",
+    "collectedDonation": "340"
+  },
+  {
+    "profileImage": "assets/images/onekid.png",
+    "title": "Atayela broken knee surgery.",
+    "startDate": "2024-May-20",
+    "dueDate": "2026-JUne-20",
+    "totalDonation": "8000",
+    "collectedDonation": "720"
+  },
+  {
+    "profileImage": "assets/images/onekid.png",
+    "title": "Kanombe earthquake survivors.",
+    "startDate": "2024-May-20",
+    "dueDate": "2026-JUne-20",
+    "totalDonation": "50000",
+    "collectedDonation": "2340"
+  }
+]
