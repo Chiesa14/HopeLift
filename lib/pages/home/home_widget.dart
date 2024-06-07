@@ -1,10 +1,9 @@
 import 'dart:convert';
 import 'dart:ui';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:hopelift/components/build_testomonies.dart';
+import 'package:hopelift/components/home/build_events.dart';
+import 'package:hopelift/components/home/build_testomonies.dart';
 import 'package:hopelift/components/my_appbar.dart';
 
 class HomePage extends StatefulWidget {
@@ -55,25 +54,11 @@ class _HomePageState extends State<HomePage> {
     print('Tapped on: ${event['title']}');
   }
 
-  String getIconPath(String category) {
-    print(category);
-    switch (category.toLowerCase()) {
-      case 'education':
-        return 'assets/icons/education.svg';
-      case 'treatment':
-        return 'assets/icons/treatment.svg';
-      case 'refugee':
-        return 'assets/icons/refugee.svg';
-      default:
-        return 'assets/icons/treatment.svg';
-    }
-  }
-
   PageController _pageController = PageController();
   int _currentPage = 0;
 
   void _nextPage() {
-    if (_currentPage < 5) {
+    if (_currentPage < 3) {
       _pageController.animateToPage(_currentPage + 1,
           duration: Duration(milliseconds: 300), curve: Curves.easeIn);
     }
@@ -124,75 +109,19 @@ class _HomePageState extends State<HomePage> {
                 shrinkWrap: true,
                 itemCount: events.length,
                 itemBuilder: (context, index) {
-                  return InkWell(
-                    onTap: () => _onCardTap(events[index]),
-                    child: Card(
-                      margin: EdgeInsets.symmetric(vertical: 10),
-                      child: Container(
-                        constraints: BoxConstraints(minHeight: 200),
-                        decoration: BoxDecoration(
-                          image: DecorationImage(
-                            image: AssetImage(events[index]['image']),
-                            fit: BoxFit.cover,
-                          ),
-                          borderRadius: BorderRadius.circular(10),
-                        ),
-                        child: ClipRRect(
-                          borderRadius: BorderRadius.circular(10),
-                          child: Stack(
-                            children: [
-                              Positioned.fill(
-                                child: BackdropFilter(
-                                  filter:
-                                      ImageFilter.blur(sigmaX: 5, sigmaY: 5),
-                                  child: Container(
-                                    color: Colors.black.withOpacity(0.3),
-                                  ),
-                                ),
-                              ),
-                              Padding(
-                                padding: EdgeInsets.all(10),
-                                child: Column(
-                                  children: [
-                                    Align(
-                                      alignment: Alignment.topRight,
-                                      child: SvgPicture.asset(
-                                        getIconPath(events[index]['category']),
-                                        width: 24,
-                                        height: 24,
-                                      ),
-                                    ),
-                                    Align(
-                                        child: Padding(
-                                      padding: EdgeInsets.only(right: 50),
-                                      child: Text(events[index]['title'],
-                                          style: TextStyle(
-                                            color: Colors.white,
-                                            fontSize: 30,
-                                            fontWeight: FontWeight.bold,
-                                          )),
-                                      // SizedBox(width: 20)
-                                    ))
-                                  ],
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
-                      ),
-                    ),
-                  );
+                  return BuildEvents.buildEventCard(events[index], _onCardTap);
                 },
               ),
               Row(
                 mainAxisAlignment: MainAxisAlignment.end,
                 children: [
                   TextButton(
-                      onPressed: () {},
-                      child: Text(
-                        "Continue to view more >",
-                        style: TextStyle(color: Colors.white),
-                      ))
+                    onPressed: () {},
+                    child: Text(
+                      "Continue to view more >",
+                      style: TextStyle(color: Colors.white),
+                    ),
+                  ),
                 ],
               ),
               SizedBox(height: 5),
@@ -242,17 +171,15 @@ class _HomePageState extends State<HomePage> {
                   Container(
                     height: 40,
                     decoration: BoxDecoration(
-                      color: Colors.black
-                          .withOpacity(0.5), // Black background color
-                      shape: BoxShape.circle, // Circular shape
+                      color: Colors.black.withOpacity(0.5),
+                      shape: BoxShape.circle,
                     ),
                     child: IconButton(
                       icon: Icon(Icons.arrow_back_ios, color: Colors.white),
                       onPressed: _previousPage,
                       iconSize: 15,
-                      splashRadius: 25, // Adjust splash radius if needed
-                      padding: EdgeInsets
-                          .zero, // Remove padding for better alignment
+                      splashRadius: 25,
+                      padding: EdgeInsets.zero,
                     ),
                   ),
                   SizedBox(width: 16),
@@ -272,7 +199,22 @@ class _HomePageState extends State<HomePage> {
                   ),
                 ],
               ),
-              SizedBox(height: 16),
+              SizedBox(height: 30),
+              Text(
+                "Pending Donations",
+                style: TextStyle(
+                  color: Colors.white,
+                  fontSize: 25,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+              SizedBox(height: 10),
+              Text(
+                "Check the progress of the recent donations you made.",
+                style: TextStyle(
+                  color: Colors.white,
+                ),
+              ),
             ],
           ),
         ),
